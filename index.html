@@ -1,95 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Updated CSP to allow blob: and data: for Babel -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' blob: data:; script-src * 'unsafe-inline' 'unsafe-eval' blob: data:; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';">
     <title>GymGate - Fitness on Autopilot</title>
-    
-    <!-- Babel for compiling TSX in the browser -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-              body: ['Inter', 'sans-serif'],
-            },
-            animation: {
-              'spin-slow': 'spin 8s linear infinite',
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
-      body { transition: background-color 0.5s ease, color 0.5s ease; }
-      .no-scrollbar::-webkit-scrollbar { display: none; }
-      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-      .animate-marquee { animation: marquee 30s linear infinite; }
-      @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-      .animate-float { animation: float 6s ease-in-out infinite; }
-      @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-      .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
-    </style>
-
-    <!-- Global Libraries (UMD) -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Lucide React UMD -->
-    <script src="https://unpkg.com/lucide-react@0.344.0/dist/umd/lucide-react.js"></script>
-    
-    <!-- Framer Motion UMD -->
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-
-  <script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.25"
-  }
-}
-</script>
-</head>
-  <body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen">
     <div id="root"></div>
-
-    <!-- Application Files (Loaded Sequentially) -->
-    <!-- 1. Utilities & Contexts -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./types.ts"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./constants.ts"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/ThemeContext.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/NavigationContext.tsx"></script>
-    
-    <!-- 2. UI Components -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/Logo.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/PhoneMockup.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/AnimatedBackground.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/Navbar.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/Hero.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/ProblemSolution.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/GlobalReach.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/BentoGrid.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/FeatureSection.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/SocialProof.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/FAQ.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/WaitlistForm.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/StickyCTA.tsx"></script>
-
-    <!-- 3. Main App & Entry -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./App.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./index.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
