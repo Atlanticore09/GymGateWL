@@ -1,11 +1,10 @@
-import { FeatureItem, Testimonial, FAQItem } from './types';
-import { MapPin, Battery, Trophy, Zap, Clock, Shield } from 'lucide-react';
+import { MapPin, Battery, Trophy, Zap } from 'lucide-react';
 
 export const SOCIAL_PROOF_LOGOS = [
   "GOLD'S GYM", "EQUINOX", "LA FITNESS", "ANYTIME FITNESS", "PLANET FITNESS", "24 HOUR FITNESS", "LIFETIME"
 ];
 
-export const FEATURES: FeatureItem[] = [
+export const FEATURES = [
   {
     id: "geo",
     title: "Geofence Auto-Start",
@@ -36,7 +35,7 @@ export const FEATURES: FeatureItem[] = [
   }
 ];
 
-export const TESTIMONIALS: Testimonial[] = [
+export const TESTIMONIALS = [
   {
     id: 1,
     quote: "I used to forget to log my workouts half the time. GymGate just does it. It's like magic.",
@@ -57,7 +56,7 @@ export const TESTIMONIALS: Testimonial[] = [
   }
 ];
 
-export const FAQS: FAQItem[] = [
+export const FAQS = [
   {
     question: "Does it drain my battery?",
     answer: "No. We use region monitoring (geofencing) which is handled by the OS. The app only wakes up when you actually enter the gym."

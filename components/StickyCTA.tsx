@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useTheme } from './ThemeContext';
 import { ArrowRight } from 'lucide-react';
+import { useTheme } from './ThemeContext';
 import { useNavigation } from './NavigationContext';
 
-const StickyCTA: React.FC = () => {
+const StickyCTA = () => {
   const { theme } = useTheme();
   const { navigateTo } = useNavigation();
   const [isVisible, setIsVisible] = useState(false);

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-export type Page = 'home' | 'waitlist';
+type Page = 'home' | 'waitlist' | string;
 
 interface NavigationContextType {
   currentPage: Page;
@@ -11,7 +11,7 @@ interface NavigationContextType {
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
 
-export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const NavigationProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [targetId, setTargetId] = useState<string | null>(null);
 

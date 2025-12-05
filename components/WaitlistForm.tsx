@@ -1,34 +1,24 @@
 import React, { useState } from 'react';
-import { useTheme } from './ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigation } from './NavigationContext';
 import { ArrowLeft } from 'lucide-react';
+import { useTheme } from './ThemeContext';
+import { useNavigation } from './NavigationContext';
 
-// ------------------------------------------------------------------
-// CONFIGURATION
-// ------------------------------------------------------------------
-// 1. Go to https://formspree.io and sign up for a free account
-// 2. Create a new form
-// 3. Replace the URL below with your unique form endpoint
-//    e.g. "https://formspree.io/f/mqazqozr"
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xanrbpjz";
 
-const WaitlistForm: React.FC = () => {
+const WaitlistForm = () => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const { theme } = useTheme();
   const { currentPage, navigateTo } = useNavigation();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if(!email) return;
 
     setLoading(true);
 
-    // DEMO MODE CHECK:
-    // If the user hasn't replaced the placeholder ID yet, we simulate a success
-    // so the UI interaction still works for testing purposes.
     if (FORMSPREE_ENDPOINT.includes("YOUR_FORM_ID")) {
       setTimeout(() => {
         setLoading(false);
@@ -37,7 +27,6 @@ const WaitlistForm: React.FC = () => {
       return;
     }
 
-    // REAL SUBMISSION MODE:
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
@@ -50,7 +39,7 @@ const WaitlistForm: React.FC = () => {
 
       if (response.ok) {
         setSubmitted(true);
-        setEmail(''); // Clear sensitive data
+        setEmail('');
       } else {
         alert("Oops! There was a problem submitting your form. Please try again.");
       }
@@ -67,7 +56,6 @@ const WaitlistForm: React.FC = () => {
     <section id="waitlist" className={`py-12 px-6 flex flex-col justify-center ${isPage ? 'flex-grow min-h-[60vh]' : ''}`}>
       <div className={`max-w-4xl w-full mx-auto ${theme.colors.surface} ${theme.ui.roundness} p-8 md:p-20 ${theme.ui.cardShadow} text-center space-y-8 relative overflow-hidden border ${theme.colors.primaryBorder}`}>
         
-        {/* Back button if on subpage */}
         {isPage && !submitted && (
            <button 
              onClick={() => navigateTo('home')}
@@ -77,7 +65,6 @@ const WaitlistForm: React.FC = () => {
            </button>
         )}
 
-        {/* Decorative Background */}
         <div className={`absolute top-0 right-0 w-96 h-96 ${theme.colors.primaryBg} opacity-[0.03] rounded-bl-full pointer-events-none`}></div>
         <div className={`absolute bottom-0 left-0 w-64 h-64 ${theme.colors.primaryBg} opacity-[0.03] rounded-tr-full pointer-events-none`}></div>
 

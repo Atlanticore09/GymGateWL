@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTheme } from './ThemeContext';
 import { MapPin, Dumbbell, Trophy } from 'lucide-react';
+import { useTheme } from './ThemeContext';
 
-const FeatureSection: React.FC = () => {
+const FeatureSection = () => {
   const { theme } = useTheme();
 
   const steps = [
@@ -31,7 +31,6 @@ const FeatureSection: React.FC = () => {
          </div>
 
          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {/* Connecting Line (Desktop) */}
             <div className={`hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 ${theme.colors.primaryBorder} border-t-2 border-dashed z-0`}></div>
 
             {steps.map((step, i) => (

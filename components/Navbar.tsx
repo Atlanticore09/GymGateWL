@@ -1,23 +1,23 @@
 import React from 'react';
-import { Activity } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 import { useNavigation } from './NavigationContext';
+import Logo from './Logo';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const { theme } = useTheme();
   const { navigateTo } = useNavigation();
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${theme.ui.glass}`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo - Goes to Home */}
         <button 
           onClick={() => navigateTo('home')}
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
         >
-          <div className={`w-8 h-8 ${theme.colors.primaryBg} rounded-lg flex items-center justify-center text-white`}>
-            <Activity size={18} />
+          <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+            <Logo className="w-8 h-8" />
           </div>
+          
           <span className={`font-bold text-lg tracking-tight ${theme.colors.text}`}>
             GymGate
           </span>

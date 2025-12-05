@@ -1,23 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useTheme } from './ThemeContext';
 import { Globe, MapPin, Plus } from 'lucide-react';
+import { useTheme } from './ThemeContext';
 
-interface Point {
-  x: number;
-  y: number;
-  z: number;
-  lat: number;
-  lng: number;
-}
-
-const ParticleGlobe: React.FC = () => {
+const ParticleGlobe = () => {
   const { theme } = useTheme();
   const [rotation, setRotation] = useState(0);
-  const requestRef = useRef<number>(0);
+  const requestRef = useRef(0);
   
-  // Reduced points for cleaner look at small scale
   const numPoints = 150;
-  const points: Point[] = Array.from({ length: numPoints }, (_, i) => {
+  const points = Array.from({ length: numPoints }, (_, i) => {
     const phi = Math.acos(1 - 2 * (i + 0.5) / numPoints);
     const theta = Math.PI * (1 + 5 ** 0.5) * (i + 0.5);
     
@@ -25,7 +16,7 @@ const ParticleGlobe: React.FC = () => {
     const y = Math.sin(theta) * Math.sin(phi);
     const z = Math.cos(phi);
 
-    return { x, y, z, lat: 0, lng: 0 };
+    return { x, y, z };
   });
 
   const animate = () => {
@@ -40,23 +31,18 @@ const ParticleGlobe: React.FC = () => {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      {/* Glow Effect */}
       <div className={`absolute inset-0 rounded-full blur-xl opacity-40 ${theme.colors.primaryBg}`}></div>
 
       <div className="relative w-full h-full perspective-1000">
         {points.map((point, i) => {
-          // Rotate around Y axis
           const rotatedX = point.x * Math.cos(rotation) - point.z * Math.sin(rotation);
           const rotatedZ = point.x * Math.sin(rotation) + point.z * Math.cos(rotation);
           
-          // Project to 2D
-          const scale = (rotatedZ + 2) / 3; // Depth scaling
-          const opacity = Math.max(0.1, (rotatedZ + 1) / 2); // Fade out back points
+          const scale = (rotatedZ + 2) / 3;
+          const opacity = Math.max(0.1, (rotatedZ + 1) / 2);
           
-          // Adjusted size for smaller container
           const size = Math.max(1.5, 3 * scale);
 
-          // Center is 50%, 50%
           const left = `${50 + rotatedX * 35}%`;
           const top = `${50 + point.y * 35}%`;
 
@@ -80,28 +66,25 @@ const ParticleGlobe: React.FC = () => {
           );
         })}
         
-        {/* Simplified Orbital Ring */}
         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] border border-dashed ${theme.colors.primaryBorder} rounded-full opacity-30 animate-[spin_10s_linear_infinite]`}></div>
       </div>
     </div>
   );
 };
 
-const GlobalReach: React.FC = () => {
+const GlobalReach = () => {
   const { theme } = useTheme();
 
   return (
     <section className="py-24 px-6 relative z-10 overflow-hidden">
       <div className="max-w-4xl mx-auto text-center">
         
-        {/* Caption & Mini Globe */}
         <div className="flex items-center justify-center gap-6 mb-8">
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border ${theme.colors.primaryBorder} ${theme.colors.surfaceHighlight}`}>
                 <Globe size={14} className={theme.colors.primary} />
                 <span className={`text-xs font-bold tracking-widest uppercase ${theme.colors.textMuted}`}>Global Access</span>
             </div>
             
-            {/* Small Animated Globe Inline */}
             <div className="w-20 h-20 -my-6">
                 <ParticleGlobe />
             </div>
@@ -115,7 +98,6 @@ const GlobalReach: React.FC = () => {
            Whether you're at a massive franchise in New York or a basement gym in Tokyo, GymGate has you covered.
         </p>
 
-        {/* Feature Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
              <div className={`p-6 rounded-2xl ${theme.colors.surface} border ${theme.colors.primaryBorder} flex items-center gap-4 text-left shadow-sm`}>
                 <div className={`w-12 h-12 rounded-full ${theme.colors.surfaceHighlight} flex items-center justify-center shrink-0`}>

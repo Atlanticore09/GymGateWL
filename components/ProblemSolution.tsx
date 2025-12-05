@@ -1,9 +1,9 @@
 import React from 'react';
-import { useTheme } from './ThemeContext';
 import { X, Check, ArrowDown, Dumbbell, ClipboardList, Zap, BrainCircuit, Plus, Equal } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTheme } from './ThemeContext';
 
-const ProblemSolution: React.FC = () => {
+const ProblemSolution = () => {
   const { theme } = useTheme();
 
   return (
@@ -23,10 +23,8 @@ const ProblemSolution: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 relative">
           
-          {/* Connector Line (Desktop) */}
           <div className={`hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-transparent via-${theme.colors.primaryBg} to-transparent w-full h-px opacity-20`}></div>
 
-          {/* The Old Way: Visual Equation */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -41,7 +39,6 @@ const ProblemSolution: React.FC = () => {
             </div>
 
             <div className="flex-1 flex flex-col justify-center space-y-6">
-              {/* Variable A */}
               <div className={`flex items-center gap-4 ${theme.colors.text} opacity-80`}>
                 <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center shrink-0">
                   <Dumbbell className="text-red-400" size={24} />
@@ -52,13 +49,11 @@ const ProblemSolution: React.FC = () => {
                 </div>
               </div>
 
-              {/* Operator */}
               <div className="flex items-center gap-4 pl-4">
                 <Plus size={20} className="text-red-500/50" />
                 <span className="text-sm text-red-500/50 font-medium">AND</span>
               </div>
 
-              {/* Variable B */}
               <div className={`flex items-center gap-4 ${theme.colors.text} opacity-80`}>
                 <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center shrink-0">
                   <ClipboardList className="text-red-400" size={24} />
@@ -69,7 +64,6 @@ const ProblemSolution: React.FC = () => {
                 </div>
               </div>
 
-              {/* Result */}
               <div className="pt-6 border-t border-red-500/20 mt-2">
                  <div className="flex items-center gap-3 text-red-500 font-bold text-xl">
                    <Equal size={24} />
@@ -79,7 +73,6 @@ const ProblemSolution: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* The GymGate Way: Visual Equation */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -96,7 +89,6 @@ const ProblemSolution: React.FC = () => {
             </div>
             
             <div className="flex-1 flex flex-col justify-center space-y-6 relative z-10">
-              {/* Variable A */}
               <div className={`flex items-center gap-4 ${theme.colors.text}`}>
                 <div className={`w-12 h-12 rounded-xl ${theme.colors.primaryBg} flex items-center justify-center shrink-0 shadow-lg`}>
                   <BrainCircuit className="text-white" size={24} />
@@ -107,13 +99,11 @@ const ProblemSolution: React.FC = () => {
                 </div>
               </div>
 
-              {/* Operator */}
               <div className="flex items-center gap-4 pl-4">
                 <Plus size={20} className={`${theme.colors.textMuted}`} />
                 <span className={`text-sm ${theme.colors.textMuted} font-medium`}>AND</span>
               </div>
 
-              {/* Variable B (Automated) */}
               <div className={`flex items-center gap-4 ${theme.colors.text}`}>
                 <div className={`w-12 h-12 rounded-xl ${theme.colors.surface} border ${theme.colors.primaryBorder} flex items-center justify-center shrink-0`}>
                   <Zap className="text-yellow-400 fill-yellow-400" size={24} />
@@ -127,7 +117,6 @@ const ProblemSolution: React.FC = () => {
                 </div>
               </div>
 
-               {/* Result */}
                <div className={`pt-6 border-t ${theme.colors.primaryBorder} mt-2`}>
                  <div className={`flex items-center gap-3 ${theme.colors.primary} font-bold text-xl`}>
                    <Equal size={24} />

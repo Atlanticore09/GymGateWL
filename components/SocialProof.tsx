@@ -2,10 +2,9 @@ import React from 'react';
 import { useTheme } from './ThemeContext';
 import { SOCIAL_PROOF_LOGOS } from '../constants';
 
-const SocialProof: React.FC = () => {
+const SocialProof = () => {
   const { theme } = useTheme();
   
-  // Duplicate array for seamless infinite scroll
   const logos = [...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS, ...SOCIAL_PROOF_LOGOS];
 
   return (
@@ -26,7 +25,6 @@ const SocialProof: React.FC = () => {
           ))}
         </div>
         
-        {/* Gradient Masks */}
         <div className={`absolute top-0 left-0 h-full w-24 bg-gradient-to-r ${theme.id === 'focus' ? 'from-black' : theme.id === 'vitamin' ? 'from-[#FFFDF7]' : 'from-white'} to-transparent z-10`}></div>
         <div className={`absolute top-0 right-0 h-full w-24 bg-gradient-to-l ${theme.id === 'focus' ? 'from-black' : theme.id === 'vitamin' ? 'from-[#FFFDF7]' : 'from-white'} to-transparent z-10`}></div>
       </div>

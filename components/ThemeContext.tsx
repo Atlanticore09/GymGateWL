@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Theme, ThemeId } from '../types';
 
-const THEMES: Record<ThemeId, Theme> = {
+const THEMES: Record<string, Theme> = {
   'pure': {
     id: 'pure',
     name: 'PURE STATE',
@@ -29,13 +29,13 @@ const THEMES: Record<ThemeId, Theme> = {
     id: 'vitamin',
     name: 'VITAMIN D',
     colors: {
-      bg: 'bg-[#FFFDF7]', // Cream
+      bg: 'bg-[#FFFDF7]', 
       text: 'text-stone-900',
       textMuted: 'text-stone-500',
       primary: 'text-orange-500',
       primaryBg: 'bg-orange-500',
       primaryBorder: 'border-orange-100',
-      secondaryBg: 'bg-[#FFF4E6]', // Light orange bg
+      secondaryBg: 'bg-[#FFF4E6]', 
       surface: 'bg-white',
       surfaceHighlight: 'bg-orange-50',
       action: 'bg-orange-500',
@@ -79,9 +79,9 @@ interface ThemeContextType {
   availableThemes: Theme[];
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentThemeId, setCurrentThemeId] = useState<ThemeId>('focus');
 
   const value = {

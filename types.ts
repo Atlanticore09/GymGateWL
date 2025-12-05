@@ -3,7 +3,7 @@ export interface FeatureItem {
   title: string;
   description: string;
   icon?: any;
-  colSpan?: number; // For Bento grid
+  colSpan?: number;
 }
 
 export interface Testimonial {
@@ -28,13 +28,13 @@ export interface Theme {
     bg: string;
     text: string;
     textMuted: string;
-    primary: string; // Text color
-    primaryBg: string; // Background color
+    primary: string;
+    primaryBg: string;
     primaryBorder: string;
-    secondaryBg: string; // For accent cards
+    secondaryBg: string;
     surface: string;
     surfaceHighlight: string;
-    action: string; // For buttons
+    action: string;
     actionText: string;
   };
   ui: {

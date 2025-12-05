@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 import { FAQS } from '../constants';
-import { ChevronDown } from 'lucide-react';
 
-const FAQ: React.FC = () => {
+const FAQ = () => {
   const { theme } = useTheme();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 

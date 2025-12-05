@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import SocialProof from './components/SocialProof';
-import BentoGrid from './components/BentoGrid';
-import FeatureSection from './components/FeatureSection';
-import GlobalReach from './components/GlobalReach';
-import FAQ from './components/FAQ';
-import WaitlistForm from './components/WaitlistForm';
-import AnimatedBackground from './components/AnimatedBackground';
-import StickyCTA from './components/StickyCTA';
-import ProblemSolution from './components/ProblemSolution';
-import { ThemeProvider, useTheme } from './components/ThemeContext';
-import { NavigationProvider, useNavigation } from './components/NavigationContext';
 import { Twitter, Instagram } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ThemeProvider, useTheme } from './components/ThemeContext';
+import { NavigationProvider, useNavigation } from './components/NavigationContext';
 
-const Footer: React.FC = () => {
+import AnimatedBackground from './components/AnimatedBackground';
+import Navbar from './components/Navbar';
+import ProblemSolution from './components/ProblemSolution';
+import Hero from './components/Hero';
+import GlobalReach from './components/GlobalReach';
+import BentoGrid from './components/BentoGrid';
+import FeatureSection from './components/FeatureSection';
+import SocialProof from './components/SocialProof';
+import FAQ from './components/FAQ';
+import StickyCTA from './components/StickyCTA';
+import WaitlistForm from './components/WaitlistForm';
+
+const Footer = () => {
   const { theme } = useTheme();
   return (
     <footer className={`border-t ${theme.colors.primaryBorder} ${theme.colors.surfaceHighlight} py-12 px-6 relative z-10`}>
@@ -36,12 +37,11 @@ const Footer: React.FC = () => {
   );
 };
 
-const ScrollHandler: React.FC = () => {
+const ScrollHandler = () => {
   const { targetId, clearTargetId } = useNavigation();
 
   useEffect(() => {
     if (targetId) {
-      // Small timeout to ensure DOM is ready after transition
       const timer = setTimeout(() => {
         const element = document.getElementById(targetId);
         if (element) {
@@ -56,7 +56,7 @@ const ScrollHandler: React.FC = () => {
   return null;
 };
 
-const AppContent: React.FC = () => {
+const AppContent = () => {
   const { theme } = useTheme();
   const { currentPage } = useNavigation();
 
@@ -107,7 +107,7 @@ const AppContent: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <ThemeProvider>
       <NavigationProvider>

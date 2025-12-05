@@ -1,13 +1,12 @@
 import React from 'react';
 import { useTheme } from './ThemeContext';
 
-const AnimatedBackground: React.FC = () => {
+const AnimatedBackground = () => {
   const { theme } = useTheme();
 
   return (
     <div className={`fixed inset-0 z-0 pointer-events-none overflow-hidden ${theme.colors.bg} transition-colors duration-700`}>
       
-      {/* PURE THEME: Subtle Blue/Gray Blurs */}
       {theme.id === 'pure' && (
         <>
           <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-blue-100/40 rounded-full blur-3xl animate-float opacity-70"></div>
@@ -15,7 +14,6 @@ const AnimatedBackground: React.FC = () => {
         </>
       )}
 
-      {/* VITAMIN THEME: Warm Orange Glows */}
       {theme.id === 'vitamin' && (
         <>
            <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-orange-200/20 rounded-full blur-[100px] animate-float"></div>
@@ -23,7 +21,6 @@ const AnimatedBackground: React.FC = () => {
         </>
       )}
 
-      {/* FOCUS THEME: Dark Grid + Spotlights */}
       {theme.id === 'focus' && (
         <>
           <div className="absolute inset-0 opacity-[0.03]" style={{
