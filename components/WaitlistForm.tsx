@@ -4,6 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigation } from './NavigationContext';
 import { ArrowLeft } from 'lucide-react';
 
+// ------------------------------------------------------------------
+// CONFIGURATION
+// ------------------------------------------------------------------
+// 1. Go to https://formspree.io and sign up for a free account
+// 2. Create a new form
+// 3. Replace the URL below with your unique form endpoint
+//    e.g. "https://formspree.io/f/mqazqozr"
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xanrbpjz";
+
 const WaitlistForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -11,15 +20,44 @@ const WaitlistForm: React.FC = () => {
   const { theme } = useTheme();
   const { currentPage, navigateTo } = useNavigation();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(email) {
-      setLoading(true);
-      // Simulate network request
+    if(!email) return;
+
+    setLoading(true);
+
+    // DEMO MODE CHECK:
+    // If the user hasn't replaced the placeholder ID yet, we simulate a success
+    // so the UI interaction still works for testing purposes.
+    if (FORMSPREE_ENDPOINT.includes("YOUR_FORM_ID")) {
       setTimeout(() => {
         setLoading(false);
         setSubmitted(true);
-      }, 1200);
+      }, 1500);
+      return;
+    }
+
+    // REAL SUBMISSION MODE:
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setEmail(''); // Clear sensitive data
+      } else {
+        alert("Oops! There was a problem submitting your form. Please try again.");
+      }
+    } catch (error) {
+      alert("Network error. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,6 +101,7 @@ const WaitlistForm: React.FC = () => {
               <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto relative z-10">
                 <input 
                   type="email" 
+                  name="email"
                   placeholder="name@example.com" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
