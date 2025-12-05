@@ -1,0 +1,5 @@
+{
+  "name": "GymGate - AI Workout Tracker",
+  "description": "Minimalist, high-performance landing page for the GymGate iOS app. Features auto-logging, geofencing, and gamification.",
+  "requestFramePermissions": []
+}
