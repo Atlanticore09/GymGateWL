@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ThemeProvider, useTheme } from './components/ThemeContext';
 import { NavigationProvider, useNavigation } from './components/NavigationContext';
 
+// Components
 import AnimatedBackground from './components/AnimatedBackground';
 import Navbar from './components/Navbar';
 import ProblemSolution from './components/ProblemSolution';
