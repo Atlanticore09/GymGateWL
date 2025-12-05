@@ -13,31 +13,6 @@
   </head>
   <body class="min-h-screen">
     <div id="root"></div>
-
-    <!-- Application Files (Loaded Sequentially) -->
-    <!-- 1. Utilities & Contexts -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./types.ts"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./constants.ts"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/ThemeContext.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/NavigationContext.tsx"></script>
-    
-    <!-- 2. UI Components -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/Logo.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/PhoneMockup.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/AnimatedBackground.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/Navbar.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/Hero.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/ProblemSolution.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/GlobalReach.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/BentoGrid.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/FeatureSection.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/SocialProof.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/FAQ.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/WaitlistForm.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./components/StickyCTA.tsx"></script>
-
-    <!-- 3. Main App & Entry -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./App.tsx"></script>
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./index.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
