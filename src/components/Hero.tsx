@@ -10,21 +10,28 @@ const Hero = () => {
   const { navigateTo } = useNavigation();
   const [mobileIndex, setMobileIndex] = useState(0);
 
+  // HELPER: Automatically adds the base URL (e.g., /GymGateWL/) to the path
+  const getAssetPath = (path: string) => {
+    // Remove leading slash if present to avoid double slashes
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    return `${import.meta.env.BASE_URL}${cleanPath}`;
+  };
+
   // Mobile Order: Video First
   const phones = [
     { 
       desc: "History Recording", 
-      src: "/calendar_record.mp4", 
+      src: getAssetPath("calendar_record.mp4"), 
       type: "video" as const 
     },
     { 
       desc: "Back Workout", 
-      src: "/home_back.png", 
+      src: getAssetPath("home_back.png"), 
       type: "image" as const 
     },
     { 
       desc: "Chest Workout", 
-      src: "/home_chest.png", 
+      src: getAssetPath("home_chest.png"), 
       type: "image" as const 
     }
   ];
@@ -76,7 +83,7 @@ const Hero = () => {
              {/* Left Phone: Back Image */}
              <div className="transform -rotate-6 translate-y-12 scale-90 opacity-80 hover:opacity-100 hover:scale-95 transition-all duration-300">
                 <PhoneFrame 
-                  src="/home_back.png" 
+                  src={getAssetPath("home_back.png")} 
                   type="image" 
                   alt="Back Workout"
                 />
@@ -85,7 +92,7 @@ const Hero = () => {
              {/* Center Phone: Calendar Video (Main Focus) */}
              <div className="transform z-20 hover:scale-105 transition-transform duration-500">
                 <PhoneFrame 
-                  src="/calendar_record.mp4" 
+                  src={getAssetPath("calendar_record.mp4")} 
                   type="video" 
                   alt="Calendar History"
                 />
@@ -94,7 +101,7 @@ const Hero = () => {
              {/* Right Phone: Chest Image */}
              <div className="transform rotate-6 translate-y-12 scale-90 opacity-80 hover:opacity-100 hover:scale-95 transition-all duration-300">
                 <PhoneFrame 
-                  src="/home_chest.png" 
+                  src={getAssetPath("home_chest.png")} 
                   type="image" 
                   alt="Chest Workout"
                 />

@@ -23,6 +23,13 @@ const MiniPhone = ({ children, className = "", delay = "0s" }: { children?: Reac
 const BentoGrid = () => {
   const { theme } = useTheme();
 
+  // HELPER: Automatically adds the base URL (e.g., /GymGateWL/) to the path
+  const getAssetPath = (path: string) => {
+    // Remove leading slash if present to avoid double slashes
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    return `${import.meta.env.BASE_URL}${cleanPath}`;
+  };
+
   return (
     <section id="features" className="py-24 px-6 relative z-10">
       <div className="max-w-7xl mx-auto">
@@ -43,13 +50,13 @@ const BentoGrid = () => {
                // Geofence - Video
                mediaContent = (
                   <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-                     <source src="/geofence.mp4" type="video/mp4" />
+                     <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
                   </video>
                );
             } else if (i === 1) {
                // AI - Image
                mediaContent = (
-                  <img src="/consistency.png" alt={feature.title} className="w-full h-full object-cover" />
+                  <img src={getAssetPath("consistency.png")} alt={feature.title} className="w-full h-full object-cover" />
                );
             } else if (i === 2) {
                // Battery - No Frame (Placeholder Removed)
@@ -57,7 +64,7 @@ const BentoGrid = () => {
             } else if (i === 3) {
                // RPG - Image
                mediaContent = (
-                  <img src="/level.png" alt={feature.title} className="w-full h-full object-cover" />
+                  <img src={getAssetPath("level.png")} alt={feature.title} className="w-full h-full object-cover" />
                );
             }
 
