@@ -28,12 +28,11 @@ const BentoGrid = () => {
 
             if (i === 0) {
                // 0: Geofence (Video)
-               // FIX: Using a wrapper div to enforce rounding and aspect ratio.
-               // This creates a physical "mask" that the video sits inside.
+               // FIX: Scaled rounding down to [1.75rem] (~28px) to match the smaller phone size
                mediaContent = (
-                  <div className="relative h-[90%] aspect-[9/19] rounded-[2.5rem] overflow-hidden bg-black shadow-lg">
+                  <div className="relative h-[90%] aspect-[9/19] rounded-[1.75rem] overflow-hidden bg-black shadow-lg transform-gpu">
                     <video 
-                      className="w-full h-full object-cover" // object-cover ensures no black bars inside the rounded frame
+                      className="w-full h-full object-cover" 
                       autoPlay loop muted playsInline
                     >
                        <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
@@ -96,9 +95,8 @@ const BentoGrid = () => {
                 {/* RIGHT HALF: Media Content */}
                 {hasMedia && (
                     <div className="w-1/2 h-full flex items-center justify-center p-4 relative z-10">
-                        {/* Center the content.
-                           For the video, the wrapper inside 'mediaContent' handles the size/shape.
-                           For images, they scale naturally with object-contain.
+                        {/* Hover Effect Container
+                           Using h-full to maximize available vertical space
                         */}
                         <div className="w-full h-full flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-105">
                             {mediaContent}
