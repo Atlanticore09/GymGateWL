@@ -18,9 +18,7 @@ const BentoGrid = () => {
           <p className={`text-lg ${theme.colors.textMuted}`}>Everything you need to track progress, nothing to distract you.</p>
         </div>
 
-        {/* Grid Layout:
-            - auto-rows-[340px] enforces a consistent height.
-        */}
+        {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[340px]">
           {FEATURES.map((feature, i) => {
             const isWide = feature.colSpan === 2;
@@ -30,14 +28,17 @@ const BentoGrid = () => {
 
             if (i === 0) {
                // 0: Geofence (Video)
-               // Increased rounding to rounded-[2.5rem] to match iPhone screen curve
+               // FIX: Using a wrapper div to enforce rounding and aspect ratio.
+               // This creates a physical "mask" that the video sits inside.
                mediaContent = (
-                  <video 
-                    className="w-full h-full object-contain rounded-[2.5rem]" 
-                    autoPlay loop muted playsInline
-                  >
-                     <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
-                  </video>
+                  <div className="relative h-[90%] aspect-[9/19] rounded-[2.5rem] overflow-hidden bg-black shadow-lg">
+                    <video 
+                      className="w-full h-full object-cover" // object-cover ensures no black bars inside the rounded frame
+                      autoPlay loop muted playsInline
+                    >
+                       <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
+                    </video>
+                  </div>
                );
             } else if (i === 1) {
                // 1: AI (Image)
@@ -68,13 +69,10 @@ const BentoGrid = () => {
                   relative group overflow-hidden transition-transform duration-300 will-change-transform transform-gpu
                   ${isWide ? 'md:col-span-2' : 'md:col-span-1'}
                   ${theme.colors.surface} ${theme.ui.roundness} ${theme.ui.cardShadow}
-                  flex flex-row items-center /* FLEX ROW = Left/Right Layout */
+                  flex flex-row items-center
                 `}
               >
-                {/* LEFT HALF: Text Content 
-                   - Takes 50% width if media exists, otherwise 100%.
-                   - Centered vertically.
-                */}
+                {/* LEFT HALF: Text Content */}
                 <div className={`
                     relative z-20 p-6 flex flex-col justify-center h-full
                     ${hasMedia ? 'w-1/2' : 'w-full'}
@@ -95,17 +93,14 @@ const BentoGrid = () => {
                 {/* Hover Gradient Effect */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-gradient-to-br ${theme.id === 'vitamin' ? 'from-orange-400 to-yellow-300' : 'from-blue-400 to-purple-500'} pointer-events-none`}></div>
 
-                {/* RIGHT HALF: Media Content
-                   - Takes 50% width.
-                   - Centered.
-                */}
+                {/* RIGHT HALF: Media Content */}
                 {hasMedia && (
                     <div className="w-1/2 h-full flex items-center justify-center p-4 relative z-10">
-                        {/* Container for hover effect. 
-                            The 'h-full' ensures the media uses the available height.
-                            The 'object-contain' on the media itself ensures no cropping.
+                        {/* Center the content.
+                           For the video, the wrapper inside 'mediaContent' handles the size/shape.
+                           For images, they scale naturally with object-contain.
                         */}
-                        <div className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105">
+                        <div className="w-full h-full flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-105">
                             {mediaContent}
                         </div>
                     </div>
