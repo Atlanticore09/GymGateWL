@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 import { useNavigation } from './NavigationContext';
-import PhoneFrame from './PhoneFrame'; 
 import { HERO_COPY } from '../constants';
 
 const Hero = () => {
@@ -10,14 +9,12 @@ const Hero = () => {
   const { navigateTo } = useNavigation();
   const [mobileIndex, setMobileIndex] = useState(0);
 
-  // HELPER: Automatically adds the base URL (e.g., /GymGateWL/) to the path
+  // HELPER: Automatically adds the base URL
   const getAssetPath = (path: string) => {
-    // Remove leading slash if present to avoid double slashes
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
     return `${import.meta.env.BASE_URL}${cleanPath}`;
   };
 
-  // Mobile Order: Video First
   const phones = [
     { 
       desc: "History Recording", 
@@ -43,6 +40,31 @@ const Hero = () => {
   const handleNext = () => {
     setMobileIndex((prev) => Math.min(phones.length - 1, prev + 1));
   };
+
+  // Reusable UI Card Component (Replaces PhoneFrame)
+  const ScreenCard = ({ src, type, alt }: { src: string, type: 'video' | 'image', alt?: string }) => (
+    <div className={`relative w-[280px] h-[580px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 ${theme.colors.primaryBorder} bg-black`}>
+      {type === 'video' ? (
+        <video 
+          className="w-full h-full object-cover" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      ) : (
+        <img 
+          src={src} 
+          alt={alt} 
+          className="w-full h-full object-cover" 
+        />
+      )}
+      {/* Gloss overlay */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none"></div>
+    </div>
+  );
 
   return (
     <section className="relative pt-12 pb-20 md:pt-24 md:pb-32 px-6 overflow-hidden transition-all duration-500">
@@ -73,55 +95,41 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Phone Display Section */}
+        {/* Screen Display Section */}
         <div className="relative z-10 w-full max-w-5xl mx-auto animate-fade-up" style={{ animationDelay: '0.4s' }}>
-          {/* Background Glow */}
+          
           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] ${theme.id === 'vitamin' ? 'bg-orange-500/20' : theme.id === 'pure' ? 'bg-blue-500/10' : 'bg-purple-500/20'} blur-[100px] rounded-full -z-10`}></div>
           
-          {/* Desktop Layout (3 Phones) */}
-          <div className="hidden md:flex justify-center items-end gap-12">
-             {/* Left Phone: Back Image */}
-             <div className="transform -rotate-6 translate-y-12 scale-90 opacity-80 hover:opacity-100 hover:scale-95 transition-all duration-300">
-                <PhoneFrame 
-                  src={getAssetPath("home_back.png")} 
-                  type="image" 
-                  alt="Back Workout"
-                />
+          {/* Desktop Layout */}
+          <div className="hidden md:flex justify-center items-end gap-8">
+             {/* Left: Back Image */}
+             <div className="transform -rotate-6 translate-y-12 scale-90 opacity-90 hover:opacity-100 hover:scale-95 transition-all duration-300">
+                <ScreenCard src={getAssetPath("home_back.png")} type="image" alt="Back Workout" />
              </div>
              
-             {/* Center Phone: Calendar Video (Main Focus) */}
-             <div className="transform z-20 hover:scale-105 transition-transform duration-500">
-                <PhoneFrame 
-                  src={getAssetPath("calendar_record.mp4")} 
-                  type="video" 
-                  alt="Calendar History"
-                />
+             {/* Center: Video */}
+             <div className="transform z-20 hover:scale-105 transition-transform duration-500 shadow-2xl">
+                <ScreenCard src={getAssetPath("calendar_record.mp4")} type="video" alt="History" />
              </div>
 
-             {/* Right Phone: Chest Image */}
-             <div className="transform rotate-6 translate-y-12 scale-90 opacity-80 hover:opacity-100 hover:scale-95 transition-all duration-300">
-                <PhoneFrame 
-                  src={getAssetPath("home_chest.png")} 
-                  type="image" 
-                  alt="Chest Workout"
-                />
+             {/* Right: Chest Image */}
+             <div className="transform rotate-6 translate-y-12 scale-90 opacity-90 hover:opacity-100 hover:scale-95 transition-all duration-300">
+                <ScreenCard src={getAssetPath("home_chest.png")} type="image" alt="Chest Workout" />
              </div>
           </div>
 
-          {/* Mobile Layout (Carousel) */}
+          {/* Mobile Layout */}
           <div className="md:hidden relative flex items-center justify-center py-4">
-            
             <button 
               onClick={handlePrev}
               disabled={mobileIndex === 0}
-              className={`absolute left-0 z-30 p-3 rounded-full ${theme.colors.surface} border ${theme.colors.primaryBorder} shadow-lg ${theme.colors.text} disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 transition-all`}
-              aria-label="Previous view"
+              className={`absolute left-0 z-30 p-3 rounded-full ${theme.colors.surface} border ${theme.colors.primaryBorder} shadow-lg ${theme.colors.text} disabled:opacity-30 disabled:cursor-not-allowed`}
             >
               <ChevronLeft size={24} />
             </button>
 
             <div className="transform transition-all duration-300 ease-in-out">
-              <PhoneFrame 
+              <ScreenCard 
                 src={phones[mobileIndex].src}
                 type={phones[mobileIndex].type}
                 alt={phones[mobileIndex].desc}
@@ -131,24 +139,19 @@ const Hero = () => {
             <button 
               onClick={handleNext}
               disabled={mobileIndex === phones.length - 1}
-              className={`absolute right-0 z-30 p-3 rounded-full ${theme.colors.surface} border ${theme.colors.primaryBorder} shadow-lg ${theme.colors.text} disabled:opacity-30 disabled:cursor-not-allowed hover:scale-110 transition-all`}
-              aria-label="Next view"
+              className={`absolute right-0 z-30 p-3 rounded-full ${theme.colors.surface} border ${theme.colors.primaryBorder} shadow-lg ${theme.colors.text} disabled:opacity-30 disabled:cursor-not-allowed`}
             >
               <ChevronRight size={24} />
             </button>
 
             <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
               {phones.map((_, i) => (
-                <div 
-                  key={i} 
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${i === mobileIndex ? theme.colors.primaryBg + ' w-6' : theme.colors.textMuted + ' opacity-30'}`}
-                />
+                <div key={i} className={`w-2 h-2 rounded-full transition-all duration-300 ${i === mobileIndex ? theme.colors.primaryBg + ' w-6' : theme.colors.textMuted + ' opacity-30'}`} />
               ))}
             </div>
           </div>
 
         </div>
-
       </div>
     </section>
   );

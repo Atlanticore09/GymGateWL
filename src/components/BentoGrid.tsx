@@ -2,30 +2,10 @@ import React from 'react';
 import { useTheme } from './ThemeContext';
 import { FEATURES } from '../constants';
 
-const MiniPhone = ({ children, className = "", delay = "0s" }: { children?: React.ReactNode, className?: string, delay?: string }) => (
-  <div 
-    className={`absolute shadow-2xl border-[6px] border-[#1a1a1a] bg-[#000] rounded-[2.5rem] overflow-hidden ${className}`}
-    style={{ transitionDelay: delay }}
-  >
-    {/* Dynamic Island */}
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#1a1a1a] rounded-b-xl z-20"></div>
-    
-    {/* Screen Content */}
-    <div className="w-full h-full bg-slate-950 relative overflow-hidden flex items-center justify-center">
-        {children}
-    </div>
-
-    {/* Reflection/Gloss */}
-    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none z-30"></div>
-  </div>
-);
-
 const BentoGrid = () => {
   const { theme } = useTheme();
 
-  // HELPER: Automatically adds the base URL (e.g., /GymGateWL/) to the path
   const getAssetPath = (path: string) => {
-    // Remove leading slash if present to avoid double slashes
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
     return `${import.meta.env.BASE_URL}${cleanPath}`;
   };
@@ -42,27 +22,20 @@ const BentoGrid = () => {
           {FEATURES.map((feature, i) => {
             const isWide = feature.colSpan === 2;
             
-            // Logic to determine which media to show based on index/feature order
-            // 0: Geofence, 1: AI, 2: Battery, 3: RPG
+            // 0: Geofence (Video), 1: AI (Image), 2: Battery (None), 3: RPG (Image)
             let mediaContent = null;
 
             if (i === 0) {
-               // Geofence - Video
                mediaContent = (
                   <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
                      <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
                   </video>
                );
             } else if (i === 1) {
-               // AI - Image
                mediaContent = (
                   <img src={getAssetPath("consistency.png")} alt={feature.title} className="w-full h-full object-cover" />
                );
-            } else if (i === 2) {
-               // Battery - No Frame (Placeholder Removed)
-               mediaContent = null;
             } else if (i === 3) {
-               // RPG - Image
                mediaContent = (
                   <img src={getAssetPath("level.png")} alt={feature.title} className="w-full h-full object-cover" />
                );
@@ -78,6 +51,7 @@ const BentoGrid = () => {
                   flex flex-col
                 `}
               >
+                {/* Text Content */}
                 <div className={`relative z-10 mb-4 pointer-events-none ${isWide ? 'max-w-[50%]' : 'max-w-full'}`}>
                   {isWide ? (
                     <>
@@ -103,20 +77,18 @@ const BentoGrid = () => {
                 {/* Hover Gradient */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-gradient-to-br ${theme.id === 'vitamin' ? 'from-orange-400 to-yellow-300' : 'from-blue-400 to-purple-500'}`}></div>
 
-                {/* Conditional Phone Frame */}
+                {/* Media Content - No Phone Frames, Just Padded Cards */}
                 {mediaContent && (
-                  <MiniPhone 
-                    className={`
-                      transition-all duration-500 ease-out transform
-                      group-hover:scale-[1.02]
-                      ${isWide 
-                        ? 'w-44 h-[290px] right-8 top-1/2 -translate-y-1/2 rotate-0' 
-                        : 'w-40 h-[260px] -bottom-4 left-1/2 -translate-x-1/2 rotate-0' 
-                      }
-                    `}
-                  >
+                  <div className={`
+                    absolute overflow-hidden rounded-2xl shadow-xl border border-white/10
+                    transition-all duration-500 ease-out transform group-hover:scale-[1.02]
+                    ${isWide 
+                      ? 'right-6 top-6 bottom-6 w-[45%]' // Wide card: Image on right, padded
+                      : 'left-6 right-6 bottom-6 h-[45%]' // Tall card: Image on bottom, padded
+                    }
+                  `}>
                     {mediaContent}
-                  </MiniPhone>
+                  </div>
                 )}
 
               </div>
