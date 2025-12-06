@@ -77,17 +77,19 @@ const BentoGrid = () => {
                 {/* Hover Gradient */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-gradient-to-br ${theme.id === 'vitamin' ? 'from-orange-400 to-yellow-300' : 'from-blue-400 to-purple-500'}`}></div>
 
-                {/* Media Content - No Phone Frames, Just Padded Cards */}
+                {/* Media Content - "Tiny Phone" Logic */}
                 {mediaContent && (
                   <div className={`
-                    absolute overflow-hidden rounded-2xl shadow-xl border border-white/10
-                    transition-all duration-500 ease-out transform group-hover:scale-[1.02]
+                    absolute shadow-xl border-2 ${theme.colors.primaryBorder} rounded-[2rem] overflow-hidden bg-black
+                    transition-all duration-500 ease-out transform group-hover:scale-[1.02] aspect-[9/19]
                     ${isWide 
-                      ? 'right-6 top-6 bottom-6 w-[45%]' // Wide card: Image on right, padded
-                      : 'left-6 right-6 bottom-6 h-[45%]' // Tall card: Image on bottom, padded
+                      ? 'right-8 top-1/2 -translate-y-1/2 h-[85%]' // Wide card: High vertical percentage, locked aspect ratio
+                      : 'left-1/2 -translate-x-1/2 -bottom-4 w-[65%]' // Tall card: Width percentage, locked aspect ratio
                     }
                   `}>
                     {mediaContent}
+                    {/* Gloss Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none"></div>
                   </div>
                 )}
 

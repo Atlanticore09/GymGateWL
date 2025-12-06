@@ -41,9 +41,10 @@ const Hero = () => {
     setMobileIndex((prev) => Math.min(phones.length - 1, prev + 1));
   };
 
-  // Reusable UI Card Component (Replaces PhoneFrame)
+  // Reusable UI Card Component
+  // Fixed aspect ratio [9/19] prevents the "Dynamic Island" from being cut off
   const ScreenCard = ({ src, type, alt }: { src: string, type: 'video' | 'image', alt?: string }) => (
-    <div className={`relative w-[280px] h-[580px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 ${theme.colors.primaryBorder} bg-black`}>
+    <div className={`relative w-[280px] aspect-[9/19] rounded-[2.5rem] overflow-hidden shadow-2xl ring-8 ${theme.colors.primaryBorder} bg-black transform transition-transform`}>
       {type === 'video' ? (
         <video 
           className="w-full h-full object-cover" 
@@ -62,7 +63,7 @@ const Hero = () => {
         />
       )}
       {/* Gloss overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none z-10"></div>
     </div>
   );
 
@@ -108,7 +109,7 @@ const Hero = () => {
              </div>
              
              {/* Center: Video */}
-             <div className="transform z-20 hover:scale-105 transition-transform duration-500 shadow-2xl">
+             <div className="transform z-20 hover:scale-105 transition-transform duration-500">
                 <ScreenCard src={getAssetPath("calendar_record.mp4")} type="video" alt="History" />
              </div>
 
@@ -128,7 +129,7 @@ const Hero = () => {
               <ChevronLeft size={24} />
             </button>
 
-            <div className="transform transition-all duration-300 ease-in-out">
+            <div className="transform transition-all duration-300 ease-in-out scale-90">
               <ScreenCard 
                 src={phones[mobileIndex].src}
                 type={phones[mobileIndex].type}
