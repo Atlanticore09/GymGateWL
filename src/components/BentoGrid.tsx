@@ -19,7 +19,7 @@ const BentoGrid = () => {
         </div>
 
         {/* Grid Layout:
-            - auto-rows-[340px] enforces a consistent height for every box.
+            - auto-rows-[340px] enforces a consistent height.
         */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[340px]">
           {FEATURES.map((feature, i) => {
@@ -30,9 +30,10 @@ const BentoGrid = () => {
 
             if (i === 0) {
                // 0: Geofence (Video)
+               // Added rounded-[1.5rem] for that smooth "iPhone edge" look
                mediaContent = (
                   <video 
-                    className="w-full h-full object-contain" // object-contain = full visibility, no crop
+                    className="w-full h-full object-contain rounded-[1.5rem]" 
                     autoPlay loop muted playsInline
                   >
                      <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
@@ -96,14 +97,13 @@ const BentoGrid = () => {
 
                 {/* RIGHT HALF: Media Content
                    - Takes 50% width.
-                   - h-full + p-4 + object-contain ensures the image fits perfectly inside without touching edges 
-                     and without getting cut off.
+                   - Centered.
                 */}
                 {hasMedia && (
                     <div className="w-1/2 h-full flex items-center justify-center p-4 relative z-10">
-                        {/* This container restricts the media size.
-                            'h-full' ensures it uses the full 340px height.
-                            The image inside will scale to fit within this box automatically.
+                        {/* Container for hover effect. 
+                            The 'h-full' ensures the media uses the available height.
+                            The 'object-contain' on the media itself ensures no cropping.
                         */}
                         <div className="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105">
                             {mediaContent}
