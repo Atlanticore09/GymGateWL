@@ -28,9 +28,9 @@ const BentoGrid = () => {
 
             if (i === 0) {
                // 0: Geofence (Video)
-               // FIX: Scaled rounding down to [1.75rem] (~28px) to match the smaller phone size
+               // FIX: Reduced rounding further to [1.5rem] (approx 24px)
                mediaContent = (
-                  <div className="relative h-[90%] aspect-[9/19] rounded-[1.75rem] overflow-hidden bg-black shadow-lg transform-gpu">
+                  <div className="relative h-[90%] aspect-[9/19] rounded-[1.5rem] overflow-hidden bg-black shadow-lg transform-gpu">
                     <video 
                       className="w-full h-full object-cover" 
                       autoPlay loop muted playsInline
@@ -95,9 +95,7 @@ const BentoGrid = () => {
                 {/* RIGHT HALF: Media Content */}
                 {hasMedia && (
                     <div className="w-1/2 h-full flex items-center justify-center p-4 relative z-10">
-                        {/* Hover Effect Container
-                           Using h-full to maximize available vertical space
-                        */}
+                        {/* Container for hover effect */}
                         <div className="w-full h-full flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-105">
                             {mediaContent}
                         </div>
