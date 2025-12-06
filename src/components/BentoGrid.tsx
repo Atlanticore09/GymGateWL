@@ -26,18 +26,21 @@ const BentoGrid = () => {
             let mediaContent = null;
 
             if (i === 0) {
+               // Geofence - Video needs rounding to look like a screen
                mediaContent = (
-                  <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
+                  <video className="w-full h-full object-cover rounded-[2.5rem]" autoPlay loop muted playsInline>
                      <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
                   </video>
                );
             } else if (i === 1) {
+               // AI - Image with transparent bg, no rounding needed
                mediaContent = (
-                  <img src={getAssetPath("consistency.png")} alt={feature.title} className="w-full h-full object-cover" />
+                  <img src={getAssetPath("consistency.png")} alt={feature.title} className="w-full h-full object-cover select-none pointer-events-none" />
                );
             } else if (i === 3) {
+               // RPG - Image with transparent bg, no rounding needed
                mediaContent = (
-                  <img src={getAssetPath("level.png")} alt={feature.title} className="w-full h-full object-cover" />
+                  <img src={getAssetPath("level.png")} alt={feature.title} className="w-full h-full object-cover select-none pointer-events-none" />
                );
             }
 
@@ -80,16 +83,14 @@ const BentoGrid = () => {
                 {/* Media Content - "Tiny Phone" Logic */}
                 {mediaContent && (
                   <div className={`
-                    absolute shadow-xl border-2 ${theme.colors.primaryBorder} rounded-[2rem] overflow-hidden bg-black
+                    absolute 
                     transition-all duration-500 ease-out transform group-hover:scale-[1.02] aspect-[9/19]
                     ${isWide 
-                      ? 'right-8 top-1/2 -translate-y-1/2 h-[85%]' // Wide card: High vertical percentage, locked aspect ratio
-                      : 'left-1/2 -translate-x-1/2 -bottom-4 w-[65%]' // Tall card: Width percentage, locked aspect ratio
+                      ? 'right-8 top-1/2 -translate-y-1/2 w-48' // Wide card: Positioned on the right
+                      : 'bottom-0 left-1/2 -translate-x-1/2 w-[180px]' // Tall card: Positioned at the bottom center
                     }
                   `}>
                     {mediaContent}
-                    {/* Gloss Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none"></div>
                   </div>
                 )}
 

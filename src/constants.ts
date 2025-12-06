@@ -10,7 +10,7 @@ export const FEATURES = [
     title: "Geofence Auto-Start",
     description: "No buttons. Walk in, and your session begins instantly.",
     icon: MapPin,
-    colSpan: 2
+    colSpan: 1
   },
   {
     id: "ai",

@@ -42,28 +42,32 @@ const Hero = () => {
   };
 
   // Reusable UI Card Component
-  // Fixed aspect ratio [9/19] prevents the "Dynamic Island" from being cut off
+  // Removed all borders, shadows, and background colors.
+  // The image/video itself is now the only thing rendered.
   const ScreenCard = ({ src, type, alt }: { src: string, type: 'video' | 'image', alt?: string }) => (
-    <div className={`relative w-[280px] aspect-[9/19] rounded-[2.5rem] overflow-hidden shadow-2xl ring-8 ${theme.colors.primaryBorder} bg-black transform transition-transform`}>
+    <div className="relative w-[280px] aspect-[9/19] transform transition-transform">
       {type === 'video' ? (
-        <video 
-          className="w-full h-full object-cover" 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-        >
-          <source src={src} type="video/mp4" />
-        </video>
+        // For videos, we need a container to give it the phone shape,
+        // but it should be borderless.
+        <div className="w-full h-full rounded-[3rem] overflow-hidden relative z-10">
+            <video 
+            className="w-full h-full object-cover" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            >
+            <source src={src} type="video/mp4" />
+            </video>
+        </div>
       ) : (
+        // For images with transparent backgrounds, we just render the image.
         <img 
           src={src} 
           alt={alt} 
-          className="w-full h-full object-cover" 
+          className="w-full h-full object-cover select-none pointer-events-none relative z-10" 
         />
       )}
-      {/* Gloss overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none z-10"></div>
     </div>
   );
 
