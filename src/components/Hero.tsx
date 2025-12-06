@@ -9,7 +9,6 @@ const Hero = () => {
   const { navigateTo } = useNavigation();
   const [mobileIndex, setMobileIndex] = useState(0);
 
-  // HELPER: Automatically adds the base URL
   const getAssetPath = (path: string) => {
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
     return `${import.meta.env.BASE_URL}${cleanPath}`;
@@ -42,14 +41,11 @@ const Hero = () => {
   };
 
   // Reusable UI Card Component
-  // Removed all borders, shadows, and background colors.
-  // The image/video itself is now the only thing rendered.
+  // Clean, transparent, performance optimized
   const ScreenCard = ({ src, type, alt }: { src: string, type: 'video' | 'image', alt?: string }) => (
-    <div className="relative w-[280px] aspect-[9/19] transform transition-transform">
+    <div className="relative w-[280px] aspect-[9/19] transform-gpu will-change-transform">
       {type === 'video' ? (
-        // For videos, we need a container to give it the phone shape,
-        // but it should be borderless.
-        <div className="w-full h-full rounded-[3rem] overflow-hidden relative z-10">
+        <div className="w-full h-full rounded-[3rem] overflow-hidden relative z-10 backface-hidden">
             <video 
             className="w-full h-full object-cover" 
             autoPlay 
@@ -61,18 +57,17 @@ const Hero = () => {
             </video>
         </div>
       ) : (
-        // For images with transparent backgrounds, we just render the image.
         <img 
           src={src} 
           alt={alt} 
-          className="w-full h-full object-cover select-none pointer-events-none relative z-10" 
+          className="w-full h-full object-cover select-none pointer-events-none relative z-10 backface-hidden" 
         />
       )}
     </div>
   );
 
   return (
-    <section className="relative pt-12 pb-20 md:pt-24 md:pb-32 px-6 overflow-hidden transition-all duration-500">
+    <section className="relative pt-12 pb-20 md:pt-24 md:pb-32 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
         
         {/* Text Content */}
@@ -108,17 +103,17 @@ const Hero = () => {
           {/* Desktop Layout */}
           <div className="hidden md:flex justify-center items-end gap-8">
              {/* Left: Back Image */}
-             <div className="transform -rotate-6 translate-y-12 scale-90 opacity-90 hover:opacity-100 hover:scale-95 transition-all duration-300">
+             <div className="transform-gpu transition-transform duration-300 hover:scale-95 hover:opacity-100 opacity-90 -rotate-6 translate-y-12 scale-90 will-change-transform">
                 <ScreenCard src={getAssetPath("home_back.png")} type="image" alt="Back Workout" />
              </div>
              
              {/* Center: Video */}
-             <div className="transform z-20 hover:scale-105 transition-transform duration-500">
+             <div className="transform-gpu transition-transform duration-500 hover:scale-105 z-20 shadow-2xl rounded-[3rem] will-change-transform">
                 <ScreenCard src={getAssetPath("calendar_record.mp4")} type="video" alt="History" />
              </div>
 
              {/* Right: Chest Image */}
-             <div className="transform rotate-6 translate-y-12 scale-90 opacity-90 hover:opacity-100 hover:scale-95 transition-all duration-300">
+             <div className="transform-gpu transition-transform duration-300 hover:scale-95 hover:opacity-100 opacity-90 rotate-6 translate-y-12 scale-90 will-change-transform">
                 <ScreenCard src={getAssetPath("home_chest.png")} type="image" alt="Chest Workout" />
              </div>
           </div>
@@ -133,7 +128,7 @@ const Hero = () => {
               <ChevronLeft size={24} />
             </button>
 
-            <div className="transform transition-all duration-300 ease-in-out scale-90">
+            <div className="transform-gpu transition-transform duration-300 ease-in-out scale-90 will-change-transform">
               <ScreenCard 
                 src={phones[mobileIndex].src}
                 type={phones[mobileIndex].type}

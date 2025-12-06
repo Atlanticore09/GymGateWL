@@ -22,77 +22,92 @@ const BentoGrid = () => {
           {FEATURES.map((feature, i) => {
             const isWide = feature.colSpan === 2;
             
-            // 0: Geofence (Video), 1: AI (Image), 2: Battery (None), 3: RPG (Image)
+            // 0: Geofence (Video), 1: AI (Image), 3: RPG (Image)
             let mediaContent = null;
+            let mediaContainerClass = "";
 
             if (i === 0) {
-               // Geofence - Video needs rounding to look like a screen
+               // Geofence - Video
+               // FIX: Reduced rounding from [2.5rem] to 2xl so content isn't cut off
                mediaContent = (
-                  <video className="w-full h-full object-cover rounded-[2.5rem]" autoPlay loop muted playsInline>
+                  <video 
+                    className="w-full h-full object-cover rounded-2xl transform-gpu" 
+                    autoPlay loop muted playsInline
+                  >
                      <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
                   </video>
                );
+               // Container: slightly narrower to look like a phone, centered
+               mediaContainerClass = "w-[85%] h-[90%]"; 
+            
             } else if (i === 1) {
-               // AI - Image with transparent bg, no rounding needed
+               // AI - Image
                mediaContent = (
-                  <img src={getAssetPath("consistency.png")} alt={feature.title} className="w-full h-full object-cover select-none pointer-events-none" />
+                  <img src={getAssetPath("consistency.png")} alt={feature.title} className="w-full h-full object-contain object-bottom select-none pointer-events-none" />
                );
+               mediaContainerClass = "w-full h-full scale-[1.1] origin-bottom"; // Slight zoom, anchored bottom
+
             } else if (i === 3) {
-               // RPG - Image with transparent bg, no rounding needed
+               // RPG - Image
                mediaContent = (
-                  <img src={getAssetPath("level.png")} alt={feature.title} className="w-full h-full object-cover select-none pointer-events-none" />
+                  <img src={getAssetPath("level.png")} alt={feature.title} className="w-full h-full object-contain object-bottom select-none pointer-events-none" />
                );
+               mediaContainerClass = "w-full h-full scale-[1.1] origin-bottom";
             }
 
             return (
               <div 
                 key={feature.id || i} 
                 className={`
-                  relative p-8 group overflow-hidden transition-all duration-300
+                  relative group overflow-hidden transition-transform duration-300 will-change-transform
                   ${isWide ? 'md:col-span-2' : 'md:col-span-1'}
                   ${theme.colors.surface} ${theme.ui.roundness} ${theme.ui.cardShadow}
-                  flex flex-col
+                  flex flex-col justify-between 
                 `}
               >
-                {/* Text Content */}
-                <div className={`relative z-10 mb-4 pointer-events-none ${isWide ? 'max-w-[50%]' : 'max-w-full'}`}>
-                  {isWide ? (
-                    <>
-                      <div className={`w-12 h-12 ${theme.ui.roundness} ${theme.colors.surfaceHighlight} flex items-center justify-center mb-4 text-3xl`}>
-                        <feature.icon className={theme.colors.primary} size={24} />
-                      </div>
-                      <h3 className={`text-2xl font-bold mb-2 ${theme.colors.text}`}>{feature.title}</h3>
-                      <p className={`${theme.colors.textMuted} text-sm leading-relaxed`}>{feature.description}</p>
-                    </>
-                  ) : (
-                    <>
-                       <div className="flex items-center gap-3 mb-3">
-                          <div className={`w-10 h-10 ${theme.ui.roundness} ${theme.colors.surfaceHighlight} flex items-center justify-center shrink-0`}>
-                             <feature.icon className={theme.colors.primary} size={20} />
-                          </div>
-                          <h3 className={`text-xl font-bold ${theme.colors.text} leading-tight`}>{feature.title}</h3>
-                       </div>
-                       <p className={`${theme.colors.textMuted} text-sm leading-relaxed`}>{feature.description}</p>
-                    </>
-                  )}
+                {/* 1. Text Content - Pinned to Top */}
+                <div className={`relative z-20 p-8 pb-0 flex flex-col items-start ${isWide ? 'max-w-[60%]' : 'w-full'}`}>
+                   {isWide ? (
+                     // Wide Layout (if used)
+                     <>
+                        <div className={`w-12 h-12 ${theme.ui.roundness} ${theme.colors.surfaceHighlight} flex items-center justify-center mb-4 text-3xl`}>
+                          <feature.icon className={theme.colors.primary} size={24} />
+                        </div>
+                        <h3 className={`text-2xl font-bold mb-2 ${theme.colors.text}`}>{feature.title}</h3>
+                        <p className={`${theme.colors.textMuted} text-sm leading-relaxed`}>{feature.description}</p>
+                     </>
+                   ) : (
+                     // Tall Layout (Standard)
+                     <>
+                        <div className="flex items-center gap-3 mb-3">
+                           <div className={`w-10 h-10 ${theme.ui.roundness} ${theme.colors.surfaceHighlight} flex items-center justify-center shrink-0`}>
+                              <feature.icon className={theme.colors.primary} size={20} />
+                           </div>
+                           <h3 className={`text-xl font-bold ${theme.colors.text} leading-tight`}>{feature.title}</h3>
+                        </div>
+                        <p className={`${theme.colors.textMuted} text-sm leading-relaxed`}>{feature.description}</p>
+                     </>
+                   )}
                 </div>
                 
-                {/* Hover Gradient */}
+                {/* Hover Effect - Optimized */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 bg-gradient-to-br ${theme.id === 'vitamin' ? 'from-orange-400 to-yellow-300' : 'from-blue-400 to-purple-500'}`}></div>
 
-                {/* Media Content - "Tiny Phone" Logic */}
-                {mediaContent && (
-                  <div className={`
-                    absolute 
-                    transition-all duration-500 ease-out transform group-hover:scale-[1.02] aspect-[9/19]
-                    ${isWide 
-                      ? 'right-8 top-1/2 -translate-y-1/2 w-48' // Wide card: Positioned on the right
-                      : 'bottom-0 left-1/2 -translate-x-1/2 w-[180px]' // Tall card: Positioned at the bottom center
-                    }
-                  `}>
-                    {mediaContent}
-                  </div>
-                )}
+                {/* 2. Media Content - Pinned to Bottom (Flexbox) */}
+                {/* This flex container ensures images are physically pushed to the bottom and don't float under text */}
+                <div className={`
+                    relative z-10 w-full flex items-end justify-center
+                    ${isWide ? 'absolute right-0 top-0 bottom-0 w-[40%] h-full' : 'h-[60%] mt-4'}
+                `}>
+                    {mediaContent && (
+                        <div className={`
+                            relative transition-transform duration-500 ease-out group-hover:scale-[1.02]
+                            ${mediaContainerClass}
+                        `}>
+                            {mediaContent}
+                        </div>
+                    )}
+                </div>
 
               </div>
             );
