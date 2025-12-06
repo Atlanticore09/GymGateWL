@@ -30,10 +30,10 @@ const BentoGrid = () => {
 
             if (i === 0) {
                // 0: Geofence (Video)
-               // Added rounded-[1.5rem] for that smooth "iPhone edge" look
+               // Increased rounding to rounded-[2.5rem] to match iPhone screen curve
                mediaContent = (
                   <video 
-                    className="w-full h-full object-contain rounded-[1.5rem]" 
+                    className="w-full h-full object-contain rounded-[2.5rem]" 
                     autoPlay loop muted playsInline
                   >
                      <source src={getAssetPath("geofence.mp4")} type="video/mp4" />
