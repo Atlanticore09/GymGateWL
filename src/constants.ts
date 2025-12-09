@@ -67,7 +67,7 @@ export const FAQS = [
   },
   {
     question: "Is it free?",
-    answer: "The core tracking is free forever. We have a Pro tier for advanced analytics and custom app icons."
+    answer: "The app will not be entirely free, there will be a very tiny cost involved to cover production and maintenance cost of GymGate. However, it will be far cheaper than other fitness trackers."
   },
   {
     question: "When is the launch?",
